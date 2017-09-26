@@ -27,10 +27,10 @@ import javafx.stage.Stage;
  * @author s1601378
  */
 public class BlackJackV2 extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) {
-        
+
         KorttiPakka pakka = new KorttiPakka(1);
         System.out.println(pakka);
 
@@ -96,9 +96,11 @@ public class BlackJackV2 extends Application {
             pelaajanKortitTextArea.appendText(jaettuKortti + "\n");
             kortteja++;
         }
-        
+
+        if (pelaajanKasi.selvitaSumma() < 21) {
             //Luo napin nimellä btn ja labelillä "Sign in"
             Button lisaaKortti = new Button("Lisää kortti");
+            lisaaKortti.setVisible(true);
             Button lopeta = new Button("Lopeta");
             //Luo HBox layout pane nimeltään hbBtn with spacing of 10 pixels
             HBox hbBtn = new HBox(10);
@@ -119,10 +121,11 @@ public class BlackJackV2 extends Application {
                     Kortti lisaKortti = pakka.jaaKortti();
                     pelaajanKasi.otaKortti(lisaKortti);
                     pelaajanKortitTextArea.appendText(lisaKortti + "\n");
-                    pelaajanKorttienSumma.setText("Summa: " + pelaajanKasi.selvitaSumma());
+                    pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
                     System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
                 }
             });
+        }
         
 
         pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
@@ -138,5 +141,5 @@ public class BlackJackV2 extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

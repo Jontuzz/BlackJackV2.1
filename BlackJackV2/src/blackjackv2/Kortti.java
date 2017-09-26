@@ -28,4 +28,9 @@ public class Kortti {
     public void setMaa(String maa) {
         this.maa = maa;
     }
+    
+    @Override
+    public String toString() {
+        return this.arvo + " " + this.maa;
+    }
 }

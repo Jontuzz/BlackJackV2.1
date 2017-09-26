@@ -97,36 +97,43 @@ public class BlackJackV2 extends Application {
             kortteja++;
         }
 
-        if (pelaajanKasi.selvitaSumma() < 21) {
-            //Luo napin nimellä btn ja labelillä "Sign in"
-            Button lisaaKortti = new Button("Lisää kortti");
-            lisaaKortti.setVisible(true);
-            Button lopeta = new Button("Lopeta");
-            //Luo HBox layout pane nimeltään hbBtn with spacing of 10 pixels
-            HBox hbBtn = new HBox(10);
+        //Luo napin nimellä btn ja labelillä "Sign in"
+        Button lisaaKortti = new Button("Lisää kortti");
+        lisaaKortti.setVisible(true);
+        Button lopeta = new Button("Lopeta");
+        //Luo HBox layout pane nimeltään hbBtn with spacing of 10 pixels
+        HBox hbBtn = new HBox(10);
 
-            /*
+        /*
             The HBox pane sets an alignment for the button that is different from the alignment applied to the other controls in the grid pane.
             The alignment property has a value of Pos.BOTTOM_RIGHT, which positions a node at the bottom of the space vertically and at the right edge of the space horizontally. 
-             */
-            hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-            //The button is added as a child of the HBox pane, and the HBox pane is added to the grid in column 2, row 4
-            hbBtn.getChildren().add(lopeta);
-            hbBtn.getChildren().add(lisaaKortti);
-            grid.add(hbBtn, 2, 4);
+         */
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        //The button is added as a child of the HBox pane, and the HBox pane is added to the grid in column 2, row 4
+        hbBtn.getChildren().add(lopeta);
+        hbBtn.getChildren().add(lisaaKortti);
+        grid.add(hbBtn, 2, 4);
 
-            lisaaKortti.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Kortti lisaKortti = pakka.jaaKortti();
-                    pelaajanKasi.otaKortti(lisaKortti);
-                    pelaajanKortitTextArea.appendText(lisaKortti + "\n");
-                    pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
-                    System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
+        lisaaKortti.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                Kortti lisaKortti = pakka.jaaKortti();
+                pelaajanKasi.otaKortti(lisaKortti);
+                pelaajanKortitTextArea.appendText(lisaKortti + "\n");
+                
+                pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
+                
+                if (pelaajanKasi.selvitaSumma() < 21) {
+                    lisaaKortti.setVisible(true);
+                } else {
+                    lisaaKortti.setVisible(false);
+                    lisaaKortti.setDisable(true);
                 }
-            });
-        }
-        
+                
+                System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
+            }
+        });
 
         pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
 

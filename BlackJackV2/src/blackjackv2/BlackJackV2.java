@@ -135,6 +135,14 @@ public class BlackJackV2 extends Application {
             }
         });
 
+        lopeta.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                lisaaKortti.setDisable(true);
+                lisaaKortti.setVisible(false);
+            }
+        });
+        
         pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
 
         Scene scene = new Scene(grid, 600, 600);

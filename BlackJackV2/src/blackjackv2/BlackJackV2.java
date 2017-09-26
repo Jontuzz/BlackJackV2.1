@@ -96,8 +96,7 @@ public class BlackJackV2 extends Application {
             pelaajanKortitTextArea.appendText(jaettuKortti + "\n");
             kortteja++;
         }
-        pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
-        if (pelaajanKasi.selvitaSumma() < 21) {
+        
             //Luo napin nimellä btn ja labelillä "Sign in"
             Button lisaaKortti = new Button("Lisää kortti");
             Button lopeta = new Button("Lopeta");
@@ -120,10 +119,11 @@ public class BlackJackV2 extends Application {
                     Kortti lisaKortti = pakka.jaaKortti();
                     pelaajanKasi.otaKortti(lisaKortti);
                     pelaajanKortitTextArea.appendText(lisaKortti + "\n");
-                    pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
+                    pelaajanKorttienSumma.setText("Summa: " + pelaajanKasi.selvitaSumma());
+                    System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
                 }
             });
-        }
+        
 
         pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
 

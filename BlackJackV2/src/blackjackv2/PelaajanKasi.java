@@ -35,8 +35,10 @@ public class PelaajanKasi {
                 korttienSumma += 11;
             }
 
-            if (korttienSumma > 21) {
-                korttienSumma -= 10;
+            if (this.kortit.size() == 2) {
+                if (korttienSumma > 21) {
+                    korttienSumma -= 10;
+                }
             }
         }
 

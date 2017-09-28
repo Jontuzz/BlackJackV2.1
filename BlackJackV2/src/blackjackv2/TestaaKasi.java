@@ -11,6 +11,7 @@ package blackjackv2;
  */
 public class TestaaKasi {
     public static void main(String[] args) {
-        
+        System.out.println("Jee");
+        System.out.println("Aaasi");
     }
 }

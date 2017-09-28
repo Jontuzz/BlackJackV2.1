@@ -43,9 +43,9 @@ public class TestaaPelaajanKasi {
         System.out.println("--------------------------");
         
         PelaajanKasi yli21 = new PelaajanKasi();
-        yli21.otaKortti(new Kortti(1, "Ruutu"));
+        //yli21.otaKortti(new Kortti(1, "Ruutu"));
         yli21.otaKortti(new Kortti(13, "Pata"));
-        yli21.otaKortti(new Kortti(5, "Pata"));
+        yli21.otaKortti(new Kortti(14, "Pata"));
         System.out.println("Yli21 : " + yli21.selvitaSumma()); //1 = 11 13 = 10; TOIMII 11 + 10 + 5 = 26; 26 - 10 = 16
         
     }

@@ -6,6 +6,7 @@
 package blackjackv2;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +22,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  *
@@ -52,8 +55,8 @@ public class BlackJackV2 extends Application {
         //järjestyksessä ylä reuna, oikea reuna, ala reuna ja vasen reuna
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        //Luo Text objektin (jota ei voi editoida) asettaa muuttujaan scenetitle tekstin "Welcome"
-        Text scenetitle = new Text("Tervetuloa pelaamaan");
+        //Luo Text objektin (jota ei voi editoida) asettaa muuttujaan scenetitle tekstin "Tervetuloa pelaamaan BlackJackiä"
+        Text scenetitle = new Text("Tervetuloa pelaamaan BlackJackiä");
         //Käytetään setFont() metodia, ja asetetaan  fontti perhe (font family), lihavointi/painotus (weight), ja fontin koon scenetitle muuttujalle
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));//Style sheet parempi kuin inline tyyli
         //Lisääs scenetitle muuttujan Gridiin
@@ -137,29 +140,36 @@ public class BlackJackV2 extends Application {
                 if (pelaajanKasi.selvitaSumma() < 21) {
                     lisaaKorttiButton.setVisible(true);
                 } else {
-                    lisaaKorttiButton.setVisible(false);
                     lisaaKorttiButton.setDisable(true);
                     pelaajanKorttienSumma.setText("Loppusumma: " + pelaajanKasi.selvitaSumma());
-
-                    while (tietokoneAvustajanKasi.selvitaSumma() < 15) {
-                        Kortti avustajalleJaettuKortti = pakka.jaaKortti();
-                        tietokoneAvustajanKasi.otaKortti(avustajalleJaettuKortti);
-                        tietokoneAvustajanKortit.appendText(avustajalleJaettuKortti + "\n");
-                        tietokoneAvustajanKorttienSumma.setText("Korttien summa: " + tietokoneAvustajanKasi.selvitaSumma());
-                    }
-                    tietokoneAvustajanKorttienSumma.setText("Loppu summa: " + tietokoneAvustajanKasi.selvitaSumma());
+                    tietoKoneAvustajanKortit(tietokoneAvustajanKasi, pakka, tietokoneAvustajanKortit, tietokoneAvustajanKorttienSumma);
                 }
                 System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
             }
         }
         );
 
+        tietokoneAvustajanKorttienSumma.setText("Loppu summa: " + tietokoneAvustajanKasi.selvitaSumma());
+        
+        
+        
+        
         lopetaButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                tietoKoneAvustajanKortit(tietokoneAvustajanKasi, pakka, tietokoneAvustajanKortit, tietokoneAvustajanKorttienSumma);
                 lisaaKorttiButton.setDisable(true);
-                lisaaKorttiButton.setVisible(false);
+                scenetitle.setText(kumpiVoitti(tietokoneAvustajanKasi.selvitaSumma(), pelaajanKasi.selvitaSumma(), pelaajanKasi));
 
+                /*while (primaryStage.isShowing()) {
+                    for (int c = 0; c <= 253 && primaryStage.isShowing(); c++) {
+                        scene.setFill(Color.rgb(c, 255 - c, c));
+                        
+                        //this.BackColor = Color.FromArgb(c, 255 - c, c);
+                        //Application.DoEvents();
+                        //System.Threading.Thread.Sleep(3);
+                    }
+                }*/
             }
         });
 
@@ -167,7 +177,35 @@ public class BlackJackV2 extends Application {
 
         Scene scene = new Scene(grid, 600, 600);
         primaryStage.setScene(scene);
+
         primaryStage.show();
+    }
+
+    public String kumpiVoitti(int tietoKoneenKorttienSumma, int pelaajanKorttienSumma, PelaajanKasi pelaajanKasi) {
+        if (pelaajanKasi.onkoPelaajallaBlackJack()) {
+            System.out.println("Pelaajalla BlackJack");
+            return "Pelaaja voitti, pelaajalla BlackJack!";
+        }
+        if (tietoKoneenKorttienSumma > pelaajanKorttienSumma && tietoKoneenKorttienSumma <= 21 || tietoKoneenKorttienSumma <= 21 && pelaajanKorttienSumma > 21) {
+            System.out.println("Tietokone voitti!");
+            return "Tietokone voitti!";
+        } else if (pelaajanKorttienSumma > tietoKoneenKorttienSumma && pelaajanKorttienSumma <= 21 || pelaajanKorttienSumma <= 21 && tietoKoneenKorttienSumma > 21) {
+            System.out.println("Pelaaja voitti");
+            return "Pelaaja voitti!";
+        } else {
+            System.out.println("Kumpikaan ei voittanut");
+            return "Kumpikaan ei voittanut";
+        }
+    }
+
+    private void tietoKoneAvustajanKortit(PelaajanKasi tietokoneAvustajanKasi, KorttiPakka pakka, TextArea tietokoneAvustajanKortit, Label tietokoneAvustajanKorttienSumma) {
+        while (tietokoneAvustajanKasi.selvitaSumma() < 15) {
+            Kortti avustajalleJaettuKortti = pakka.jaaKortti();
+            tietokoneAvustajanKasi.otaKortti(avustajalleJaettuKortti);
+            tietokoneAvustajanKortit.appendText(avustajalleJaettuKortti + "\n");
+            tietokoneAvustajanKorttienSumma.setText("Korttien summa: " + tietokoneAvustajanKasi.selvitaSumma());
+        }
+        tietokoneAvustajanKorttienSumma.setText("Loppu summa: " + tietokoneAvustajanKasi.selvitaSumma());
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package blackjackv2;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -35,6 +35,7 @@ public class BlackJackV2 extends Application {
         System.out.println(pakka);
 
         PelaajanKasi pelaajanKasi = new PelaajanKasi();
+        PelaajanKasi tietokoneAvustajanKasi = new PelaajanKasi();
 
         primaryStage.setTitle("BlackJack Peli!");
 
@@ -82,28 +83,27 @@ public class BlackJackV2 extends Application {
         Label tietokoneenKortitLabel = new Label("Tietokoneen kortit:");
         grid.add(tietokoneenKortitLabel, 0, 1);
 
-        TextArea tietokoneenKortitTextArea = new TextArea();
-        tietokoneenKortitTextArea.setEditable(false);
-        tietokoneenKortitTextArea.setPrefHeight(300);
-        tietokoneenKortitTextArea.setPrefWidth(200);
-        grid.add(tietokoneenKortitTextArea, 0, 2);
-
-        
+        TextArea tietokoneAvustajanKortit = new TextArea();
+        tietokoneAvustajanKortit.setEditable(false);
+        tietokoneAvustajanKortit.setPrefHeight(300);
+        tietokoneAvustajanKortit.setPrefWidth(200);
+        grid.add(tietokoneAvustajanKortit, 0, 2);
+        Label tietokoneAvustajanKorttienSumma = new Label("Korttien summa: " + tietokoneAvustajanKasi.selvitaSumma());
+        grid.add(tietokoneAvustajanKorttienSumma, 0, 3);
         //Luo napin nimellä btn ja labelillä "Sign in"
         Button lisaaKorttiButton = new Button("Lisää kortti");
         Button lopetaButton = new Button("Lopeta");
-        
-        
+
         //Luo HBox layout pane nimeltään hbBtn with spacing of 10 pixels
         HBox hbBtn = new HBox(10);
-        
+
         int kortteja = 0;
         while (kortteja < 2) {
 
             Kortti jaettuKortti = pakka.jaaKortti();
             pelaajanKasi.otaKortti(jaettuKortti);
             pelaajanKortitTextArea.appendText(jaettuKortti + "\n");
-            
+
             if (pelaajanKasi.selvitaSumma() < 21) {
                 lisaaKorttiButton.setVisible(true);
             } else {
@@ -111,12 +111,9 @@ public class BlackJackV2 extends Application {
                 lisaaKorttiButton.setDisable(true);
                 pelaajanKorttienSumma.setText("Loppusumma: " + pelaajanKasi.selvitaSumma());
             }
-            
             kortteja++;
-            
         }
-        
-        
+
         /*
             The HBox pane sets an alignment for the button that is different from the alignment applied to the other controls in the grid pane.
             The alignment property has a value of Pos.BOTTOM_RIGHT, which positions a node at the bottom of the space vertically and at the right edge of the space horizontally. 
@@ -130,35 +127,42 @@ public class BlackJackV2 extends Application {
         lisaaKorttiButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
+
                 Kortti lisaKortti = pakka.jaaKortti();
                 pelaajanKasi.otaKortti(lisaKortti);
                 pelaajanKortitTextArea.appendText(lisaKortti + "\n");
-                
+
                 pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
-                
+
                 if (pelaajanKasi.selvitaSumma() < 21) {
                     lisaaKorttiButton.setVisible(true);
                 } else {
                     lisaaKorttiButton.setVisible(false);
                     lisaaKorttiButton.setDisable(true);
                     pelaajanKorttienSumma.setText("Loppusumma: " + pelaajanKasi.selvitaSumma());
+
+                    while (tietokoneAvustajanKasi.selvitaSumma() < 15) {
+                        Kortti avustajalleJaettuKortti = pakka.jaaKortti();
+                        tietokoneAvustajanKasi.otaKortti(avustajalleJaettuKortti);
+                        tietokoneAvustajanKortit.appendText(avustajalleJaettuKortti + "\n");
+                        tietokoneAvustajanKorttienSumma.setText("Korttien summa: " + tietokoneAvustajanKasi.selvitaSumma());
+                    }
+                    tietokoneAvustajanKorttienSumma.setText("Loppu summa: " + tietokoneAvustajanKasi.selvitaSumma());
                 }
-                
                 System.out.println("Pelaajan summa: " + pelaajanKasi.selvitaSumma());
             }
-        });
+        }
+        );
 
         lopetaButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 lisaaKorttiButton.setDisable(true);
                 lisaaKorttiButton.setVisible(false);
-                
-                
+
             }
         });
-        
+
         pelaajanKorttienSumma.setText("Korttien summa: " + pelaajanKasi.selvitaSumma());
 
         Scene scene = new Scene(grid, 600, 600);
@@ -166,10 +170,6 @@ public class BlackJackV2 extends Application {
         primaryStage.show();
     }
 
-    private void jaaTietokoneAvustajalle() {
-        while 
-    }
-    
     /**
      * @param args the command line arguments
      */

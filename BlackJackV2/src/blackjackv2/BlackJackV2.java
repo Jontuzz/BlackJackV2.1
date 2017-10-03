@@ -57,8 +57,8 @@ public class BlackJackV2 extends Application {
 
         //Luo Text objektin (jota ei voi editoida) asettaa muuttujaan scenetitle tekstin "Tervetuloa pelaamaan BlackJackiä"
         Text scenetitle = new Text("Tervetuloa pelaamaan BlackJackiä");
-        //Käytetään setFont() metodia, ja asetetaan  fontti perhe (font family), lihavointi/painotus (weight), ja fontin koon scenetitle muuttujalle
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));//Style sheet parempi kuin inline tyyli
+        scenetitle.setId("scenetitle");
+        
         //Lisääs scenetitle muuttujan Gridiin
         /*
          Numerointi sarakkeille ja riveille alkaa nollasta (0) ja scenetitle lisätään sarakkeeseen 0 ja riville 0
@@ -80,6 +80,8 @@ public class BlackJackV2 extends Application {
         pelaajanKortitTextArea.setPrefHeight(300);
         pelaajanKortitTextArea.setPrefWidth(200);
         grid.add(pelaajanKortitTextArea, 2, 2);
+        
+        
         Label pelaajanKorttienSumma = new Label("Korttien summa: " + pelaajanKasi.selvitaSumma());
         grid.add(pelaajanKorttienSumma, 2, 3);
 
@@ -96,7 +98,7 @@ public class BlackJackV2 extends Application {
         //Luo napin nimellä btn ja labelillä "Sign in"
         Button lisaaKorttiButton = new Button("Lisää kortti");
         Button lopetaButton = new Button("Lopeta");
-
+        
         //Luo HBox layout pane nimeltään hbBtn with spacing of 10 pixels
         HBox hbBtn = new HBox(10);
 
@@ -160,16 +162,6 @@ public class BlackJackV2 extends Application {
                 tietoKoneAvustajanKortit(tietokoneAvustajanKasi, pakka, tietokoneAvustajanKortit, tietokoneAvustajanKorttienSumma);
                 lisaaKorttiButton.setDisable(true);
                 scenetitle.setText(kumpiVoitti(tietokoneAvustajanKasi.selvitaSumma(), pelaajanKasi.selvitaSumma(), pelaajanKasi));
-
-                /*while (primaryStage.isShowing()) {
-                    for (int c = 0; c <= 253 && primaryStage.isShowing(); c++) {
-                        scene.setFill(Color.rgb(c, 255 - c, c));
-                        
-                        //this.BackColor = Color.FromArgb(c, 255 - c, c);
-                        //Application.DoEvents();
-                        //System.Threading.Thread.Sleep(3);
-                    }
-                }*/
             }
         });
 
@@ -177,6 +169,7 @@ public class BlackJackV2 extends Application {
 
         Scene scene = new Scene(grid, 600, 600);
         primaryStage.setScene(scene);
+        scene.getStylesheets().add(BlackJackV2.class.getResource("BlackJackV2.css").toExternalForm());
 
         primaryStage.show();
     }

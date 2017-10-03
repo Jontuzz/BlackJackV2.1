@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 3, 2017, 11:20:17 AM
+    Author     : s1601378
+*/
+
+.root {
+    -fx-background-color: #fa00ae;
+}
+
+.label {
+    -fx-font-size: 12px;
+    -fx-font-family: "Tahoma";
+    -fx-font-weight: BOLD;
+    -fx-text-fill: #ffffff;
+}
+
+.text-area .content {
+    -fx-background-color: #ffffff;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: #ff9400;
+}
+
+#scenetitle {
+    -fx-font-size: 32px;
+    -fx-font-family: "Tahoma";
+    -fx-fill: #ffffff;
+}
+
+.button {
+    -fx-background-color: #ff9efa;
+    -fx-backgorund-radius: 100;
+}

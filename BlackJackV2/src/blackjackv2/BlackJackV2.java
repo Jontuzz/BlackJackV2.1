@@ -180,14 +180,14 @@ public class BlackJackV2 extends Application {
             return "Pelaaja voitti, pelaajalla BlackJack!";
         }
         if (tietoKoneenKorttienSumma > pelaajanKorttienSumma && tietoKoneenKorttienSumma <= 21 || tietoKoneenKorttienSumma <= 21 && pelaajanKorttienSumma > 21) {
-            System.out.println("Tietokone voitti!");
-            return "Tietokone voitti!";
+            System.out.println("Jakaja voitti!");
+            return "Jakaja voitti!";
         } else if (pelaajanKorttienSumma > tietoKoneenKorttienSumma && pelaajanKorttienSumma <= 21 || pelaajanKorttienSumma <= 21 && tietoKoneenKorttienSumma > 21) {
             System.out.println("Pelaaja voitti");
             return "Pelaaja voitti!";
         } else {
             System.out.println("Kumpikaan ei voittanut");
-            return "Kumpikaan ei voittanut";
+            return "Jakaja voitti";
         }
     }
 
